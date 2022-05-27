@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { AlertComponent } from './alert/alert.component';
@@ -10,7 +11,7 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'home',
@@ -19,13 +20,17 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'home'
-  }
+    redirectTo: 'home',
+  },
 ];
 
 @NgModule({
   declarations: [AppComponent, AlertComponent, ModalComponent],
-  imports: [BrowserModule, RouterModule.forRoot(routes)],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    RouterModule.forRoot(routes),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

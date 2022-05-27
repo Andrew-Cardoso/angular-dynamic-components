@@ -11,10 +11,8 @@ import { ModalService } from 'src/app/_services/modal.service';
 export class HomeComponent {
   constructor(private modalService: ModalService) {}
 
-  onClick() {
-    this.modalService
-      .modal(AlertComponent)
-      .pipe(take(1))
-      .subscribe((x) => console.log(x));
+  async onClick() {
+    const result = await this.modalService.modal<boolean>(AlertComponent);
+    console.log(result);
   }
 }

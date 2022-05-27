@@ -19,7 +19,7 @@ export class ModalService {
     this.container = container;
   }
 
-  modal<T>(modal: T) {
+  modal<T>(modal: any) {
     this.container.clear();
 
     const modalContainer = this.factory.resolveComponentFactory(ModalComponent);
@@ -33,17 +33,20 @@ export class ModalService {
 
     const modalInstance = modalComponentRef.instance as Modal<any>;
 
-    const onClose$ = new EventEmitter<any>();
-    modalInstance.onClose = (result?: T) => onClose$.emit(result);
-
-    return onClose$.pipe(
-      tap(() => {
+    const onCloseAsync = new Promise((r) => {
+      modalInstance.onClose = (result?: T) => {
+        modalContainerRef.instance.animationState = 'close';
         modalInstance.subscriptions.forEach((subs: Subscription) =>
           subs.unsubscribe()
         );
-        modalContainerRef.instance.container.clear();
-        this.container.clear();
-      })
-    );
+        setTimeout(() => {
+          modalContainerRef.instance.container.clear();
+          this.container.clear();
+          r(result);
+        }, 150);
+      };
+    });
+
+    return onCloseAsync as Promise<T>;
   }
 }

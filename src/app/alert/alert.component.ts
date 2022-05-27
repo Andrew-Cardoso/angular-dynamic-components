@@ -6,7 +6,7 @@ import { Modal } from '../modal/modal.component';
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.sass'],
 })
-export class AlertComponent extends Modal<void> {
+export class AlertComponent extends Modal<boolean> {
   constructor() {
     super();
   }
